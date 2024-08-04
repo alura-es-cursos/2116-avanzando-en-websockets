@@ -1,6 +1,6 @@
 import { eliminarEnlaceDocumentoBorrado, insertarEnlaceDocumento } from "./index.js";
 
-const socket = io('http://localhost:4000');
+const socket = io('http://localhost:3000');
 
 function emitirObtenerDocumentosBaseDatos() {
     socket.emit('obtenerDocumentos', (documentos) => {

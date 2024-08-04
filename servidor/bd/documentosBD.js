@@ -3,6 +3,7 @@ import { coleccion } from "./conexionBD.js";
 
 async function obtenerDocumentos() {
     const documentos = coleccion.find().toArray();
+    console.log(documentos);
     return documentos;
 }
 
