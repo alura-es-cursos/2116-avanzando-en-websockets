@@ -1,11 +1,11 @@
 import { consultarUsuario, registrarUsuario } from "../bd/usuariosBD.js";
 
 function registrarEventosRegistro(socket, io) {
-    socket.on('registrarUsuario', async (datosUsuarios) => {
-        const usuario = await consultarUsuario(datosUsuarios.usuario);
+    socket.on('registrarUsuario', async (datosUsuario) => {
+        const usuario = await consultarUsuario(datosUsuario.usuario);
 
         if (usuario === null) {
-            const resultado = await registrarUsuario(datosUsuarios);
+            const resultado = await registrarUsuario(datosUsuario);
             console.log(resultado);
             if (resultado.acknowledged) {
                 socket.emit('usuarioRegistrado');

@@ -1,6 +1,7 @@
-import { emitirRegistroUsuario } from "./socket-front-registro.js";
+import { emitirLoginUsuario } from "./socket-front-login.js";
 
-const form = document.querySelector('#form-registro');
+
+const form = document.querySelector('#form-login');
 
 form.addEventListener('submit', (evento) => {
     evento.preventDefault();
@@ -8,6 +9,6 @@ form.addEventListener('submit', (evento) => {
     const usuario = document.getElementById('input-usuario').value;
     const contrasena = document.getElementById('input-contrasena').value;
 
-    emitirRegistroUsuario({ usuario, contrasena });
+    emitirLoginUsuario({ usuario, contrasena });
 
 });
