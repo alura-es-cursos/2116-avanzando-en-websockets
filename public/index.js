@@ -15,7 +15,7 @@ formulario.addEventListener('submit', (event) => {
 
 function insertarEnlaceDocumento(nombreDocumento) {
     listaDocumentos.innerHTML += `
-       <a href="documento.html?nombre=${nombreDocumento}" id="doc-${nombreDocumento}" class="list-group-item list-group-item-action">
+       <a href="documento/index.html?nombre=${nombreDocumento}" id="doc-${nombreDocumento}" class="list-group-item list-group-item-action">
         ${nombreDocumento}
       </a>
     `;
