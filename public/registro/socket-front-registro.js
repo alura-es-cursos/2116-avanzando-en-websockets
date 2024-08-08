@@ -1,4 +1,4 @@
-const socket = io();
+const socket = io("/");
 
 function emitirRegistroUsuario(datosUsuario) {
     socket.emit('registrarUsuario', datosUsuario);

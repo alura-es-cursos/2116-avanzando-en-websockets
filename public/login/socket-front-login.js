@@ -1,10 +1,13 @@
-const socket = io();
+import { definirCookie } from "../utils/cookies.js";
+
+const socket = io("/");
 
 function emitirLoginUsuario(datosUsuario) {
     socket.emit('loginUsuario', datosUsuario);
 }
 
-socket.on("usuarioAutenticado", () => {
+socket.on("usuarioAutenticado", (token) => {
+    definirCookie("tokenJWT", token);
     alert('Usuario autenticado correctamente');
     window.location.href = "/";
 });

@@ -14,8 +14,7 @@ function registrarEventosLogin(socket, io) {
 
             if (autenticado) {
                 const token = generarJWT({ nombreUsuario: usuario.usuario });
-                console.log(token);
-                socket.emit("usuarioAutenticado");
+                socket.emit("usuarioAutenticado", token);
             } else {
                 socket.emit("errorAutenticando");
             }

@@ -1,6 +1,11 @@
 import { eliminarEnlaceDocumentoBorrado, insertarEnlaceDocumento } from "./index.js";
+import { obtenerCookie } from "./utils/cookies.js";
 
-const socket = io('http://localhost:3000');
+const socket = io("/usuarios", {
+    auth: {
+        token: obtenerCookie('tokenJWT'),
+    }
+});
 
 function emitirObtenerDocumentosBaseDatos() {
     socket.emit('obtenerDocumentos', (documentos) => {
@@ -13,6 +18,11 @@ function emitirObtenerDocumentosBaseDatos() {
 function emitirAgregarDocumento(nombreDocumento) {
     socket.emit('agregarDocumento', nombreDocumento);
 }
+
+socket.on("connect_error", (error) => {
+    alert(error);
+    window.location.href = "/login/index.html";
+});
 
 socket.on('agregarDocumentoLista', (nombreDocumento) => {
     insertarEnlaceDocumento(nombreDocumento);
