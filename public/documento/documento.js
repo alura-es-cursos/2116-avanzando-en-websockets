@@ -2,6 +2,7 @@ import { emitirBorrarDocumento, emitirCambiosEditor, emitirNombreDocumento } fro
 
 const textoEditor = document.getElementById('editor-texto');
 const tituloDocumento = document.getElementById('titulo-documento');
+const listaUsuariosConectados = document.getElementById('usuarios-conectados');
 const parametros = new URLSearchParams(window.location.search);
 
 const nombreDocumento = parametros.get('nombre');
@@ -9,7 +10,19 @@ const nombreDocumento = parametros.get('nombre');
 tituloDocumento.textContent = nombreDocumento || 'Documento sin titulo';
 const botonBorrarDocumento = document.querySelector('#excluir-documento');
 
-emitirNombreDocumento(nombreDocumento);
+function gestionaAutorizacionExitosa(payload) {
+    emitirNombreDocumento({ nombreDocumento, nombreUsuario: payload.nombreUsuario });
+}
+
+function actualizarListaUsuarios(listaUsuarios) {
+    let listaUsuarioHTML = "";
+
+    listaUsuarios.forEach((usuario) => {
+        listaUsuarioHTML += `<li class="list-group-item">${usuario}</li > `;
+    });
+
+    listaUsuariosConectados.innerHTML = listaUsuarioHTML;
+}
 
 textoEditor.addEventListener("keyup", () => {
     emitirCambiosEditor({ textoEditor: textoEditor.value, nombreDocumento });
@@ -32,4 +45,4 @@ function alertarYRedirigir(nombre) {
 
 }
 
-export { actualizarEditor, alertarYRedirigir }
+export { actualizarEditor, alertarYRedirigir, gestionaAutorizacionExitosa, actualizarListaUsuarios }

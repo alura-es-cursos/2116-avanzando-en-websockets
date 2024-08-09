@@ -1,5 +1,5 @@
 import { obtenerCookie } from "../utils/cookies.js";
-import { actualizarEditor, alertarYRedirigir } from "./documento.js";
+import { actualizarEditor, actualizarListaUsuarios, alertarYRedirigir, gestionaAutorizacionExitosa } from "./documento.js";
 
 const socket = io("/usuarios", {
     auth: {
@@ -7,13 +7,17 @@ const socket = io("/usuarios", {
     }
 });
 
+socket.on("autorizacionExitosa", gestionaAutorizacionExitosa);
+
+socket.on("usuariosEnDocumento", actualizarListaUsuarios);
+
 socket.on("connect_error", (error) => {
     alert(error);
     window.location.href = "/login/index.html";
 });
 
-function emitirNombreDocumento(nombreDocumento) {
-    socket.emit('nombreDocumento', nombreDocumento, (texto) => {
+function emitirNombreDocumento(datosEntradaDocumento) {
+    socket.emit('nombreDocumento', datosEntradaDocumento, (texto) => {
         console.log('Actualizando datos iniciales del documento');
         actualizarEditor(texto);
     });

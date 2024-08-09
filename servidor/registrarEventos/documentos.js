@@ -2,6 +2,7 @@ import {
     actualizarDatosDocumento, borrarDocumento,
     obtenerDatosDocumento
 } from "../bd/documentosBD.js";
+import { agregarConexion, obtenerUsuariosDocumento } from "../utils/conexionesDocumentos.js";
 
 
 function registrarEventosDocumentos(socket, io) {
@@ -26,12 +27,17 @@ function registrarEventosDocumentos(socket, io) {
 
     });
 
-    socket.on('nombreDocumento', async (nombreDocumento, devolverDocumento) => {
-        socket.join(nombreDocumento);
+    socket.on('nombreDocumento', async ({ nombreDocumento, nombreUsuario }, devolverDocumento) => {
+
 
         const documentoActual = await obtenerDatosDocumento(nombreDocumento);
 
         if (documentoActual) {
+            agregarConexion({ nombreDocumento, nombreUsuario });
+            socket.join(nombreDocumento);
+            const usuariosEnDocumento = obtenerUsuariosDocumento(nombreDocumento);
+
+            io.to(nombreDocumento).emit('usuariosEnDocumento', usuariosEnDocumento);
             devolverDocumento(documentoActual.texto);
         }
     })
