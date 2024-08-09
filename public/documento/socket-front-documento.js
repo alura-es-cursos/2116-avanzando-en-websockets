@@ -9,6 +9,11 @@ const socket = io("/usuarios", {
 
 socket.on("autorizacionExitosa", gestionaAutorizacionExitosa);
 
+socket.on("usuarioConectado", () => {
+    alert("El usuario ya tiene una conexión al documento. Por favor verifique");
+    window.location.href = "/";
+});
+
 socket.on("usuariosEnDocumento", actualizarListaUsuarios);
 
 socket.on("connect_error", (error) => {
